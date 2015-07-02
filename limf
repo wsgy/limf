@@ -1,0 +1,11 @@
+#!/bin/env python
+#Copyright 2015 lichinlich <lich@cock.li>
+#Distributed under the terms of WTF Public License v2.
+#See http://www.wtfpl.net/txt/copying for the full license text.
+import sys
+try:
+    import requests
+    import argparse
+except ImportError:
+    print("Install argparse and request libraries.")
+    exit()
