@@ -3,9 +3,32 @@
 #Distributed under the terms of WTF Public License v2.
 #See http://www.wtfpl.net/txt/copying for the full license text.
 import sys
+import re
 try:
     import requests
     import argparse
 except ImportError:
     print("Install argparse and request libraries.")
     exit()
+
+def UploadFiles(selected_file,selected_host):
+    try:
+        answer=requests.post(
+            url=selected_host[0]+"upload.php",
+            files={'files[]':open(selected_file,'rb')})
+        return selected_file+" "+selected_host[1]+re.findall('"url":"(.+)",',answer.text)[0]
+    except Exception as e:
+        print(selected_file+" couldn't be uploaded to "+selected_host[0]+"\n")
+              
+
+def main():
+    parser = argparse.ArgumentParser(
+    description='Uploads selected file to working pomf.se clone')
+    parser.add_argument('files',metavar='file',nargs='+',type=str,
+    help = 'Files to upload')
+    args=parser.parse_args()
+    for i in args.files:
+        print(UploadFiles(i,["http://1339.cf/","http://a.1339.cf/"]))
+
+if __name__=='__main__':
+    main()
