@@ -6,7 +6,7 @@ Main executable - sends the uploads the file
 Tool for making screenshots, uploading them, and putting link in clipboard
 ####Depends
 *Python 3 - required for tool to work
-*Requests library - required for tool to work
-*scrot - for doing screenshots(limfshot.sh)
-*xclip - for putting link into clipboard(limfshot.sh)
++Requests library - required for tool to work
+-scrot - for doing screenshots(limfshot.sh)
++xclip - for putting link into clipboard(limfshot.sh)
 
