@@ -12,18 +12,21 @@ except ImportError:
     print("Install argparse and request libraries.")
     exit()
 
-def UploadFiles(selected_file,selected_host):
+def UploadFiles(selected_file,selected_host,only_link):
     #uploads selected file to the host, thanks to the fact that
     #every pomf.se based site has pretty much the same architecture
     try:
         answer=requests.post(
             url=selected_host[0]+"upload.php",
             files={'files[]':open(selected_file,'rb')})
-        return selected_file+" : "+selected_host[1]+(
-        re.findall('"url":"(.+)",',answer.text)[0])
+        if only_link:
+            return selected_host[1]+(
+                re.findall('"url":"(.+)",',answer.text)[0])
+        else:
+            return selected_file+" : "+selected_host[1]+(
+                re.findall('"url":"(.+)",',answer.text)[0])
     except Exception as e:
-        print(selected_file+" couldn't be uploaded to "+selected_host[0]+"\n")
-              
+        print(selected_file+" couldn't be uploaded to "+ selected_host[0])  
 
 def main():
     parser = argparse.ArgumentParser(
@@ -32,8 +35,11 @@ def main():
     help = 'Files to upload')
     parser.add_argument('-c',metavar='host number',type=int,
     dest='host',default=random.randrange(0,4),
-    help="Select hosting: 0 - 1339.cf,1 - bucket.pw,2 - xpo.pw,3 - pomf.cat.")
-     
+    help=("Select hosting: 0 - 1339.cf,1 - bucket.pw,"+
+    "2 - xpo.pw,3 - pomf.cat."))
+    parser.add_argument('-l',dest='only_link',action='store_const',
+    const=True,default=False,
+    help='Changes output to just link to the file' )
     args=parser.parse_args()
     #TODO check if clone is active or not.
     clone_list=[
@@ -43,8 +49,12 @@ def main():
     ["http://pomf.cat/","http://a.pomf.cat/"]
     ]
     #upload every file selected to random or chosen host
-    for i in args.files:
-        print(UploadFiles(i,clone_list[args.host]))
+    try:
+        for i in args.files:
+            print(UploadFiles(i,clone_list[int(args.host)],args.only_link))
+    except IndexError:
+            print('Please enter valid server number')
+
 
 if __name__=='__main__':
     main()
