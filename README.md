@@ -1,7 +1,7 @@
 # limf
 Pomf.se clone uploading tool
 ###limf.py
-Main executable - sends the uploads the file
+Main executable - uploads the file
 ###limfshot.sh
 Tool for making screenshots, uploading them, and putting link in clipboard.  
 Useful when used as bind to key.
