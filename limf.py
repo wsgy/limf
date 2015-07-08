@@ -41,8 +41,8 @@ def main():
                         help='Files to upload')
     parser.add_argument('-c', metavar='host number', type=int,
                         dest='host', default=random.randrange(0, 4),
-                        help=("Select hosting: 0 - 1339.cf, 1 - "+
-                              "bucket.pw, 2 - xpo.pw,3 - pomf.cat."))
+                        help=("Select hosting: 0 - 1339.cf, 1 - bucket.pw,"
+                              " 2 - xpo.pw,3 - pomf.cat."))
     parser.add_argument('-l', dest='only_link', action='store_const',
                         const=True, default=False,
                         help='Changes output to just link to the file')
