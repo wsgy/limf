@@ -40,9 +40,9 @@ def main():
     parser.add_argument('files', metavar='file', nargs='+', type=str,
                         help='Files to upload')
     parser.add_argument('-c', metavar='host number', type=int,
-                        dest='host', default=random.randrange(0, 4),
+                        dest='host', default=random.randrange(0, 5),
                         help=('Select hosting: 0 - 1339.cf, 1 - bucket.pw,'
-                              ' 2 - xpo.pw,3 - pomf.cat.'))
+                              ' 2 - xpo.pw,3 - pomf.cat, 4 - teknik.io'))
     parser.add_argument('-l', dest='only_link', action='store_const',
                         const=True, default=False,
                         help='Changes output to just link to the file')
@@ -52,7 +52,8 @@ def main():
         ["http://1339.cf/", "http://a.1339.cf/"],
         ["https://bucket.pw/", "https://dl.bucket.pw/"],
         ["http://xpo.pw/", "http://u.xpo.pw/"],
-        ["http://pomf.cat/", "http://a.pomf.cat/"]
+        ["http://pomf.cat/", "http://a.pomf.cat/"],
+        ["https://u.teknik.io/includes/", "https://u.teknik.io/"]
     ]
     #upload every file selected to random or chosen host
     try:
