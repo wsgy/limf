@@ -10,7 +10,7 @@ try:
     import requests
     import argparse
 except ImportError:
-    print("Install argparse and request libraries.")
+    print('Install argparse and request libraries.')
     exit()
 
 def upload_files(selected_file, selected_host, only_link):
@@ -29,7 +29,7 @@ def upload_files(selected_file, selected_host, only_link):
             return selected_file+" : "+selected_host[1]+(
                 re.findall('"url":"(.+)",', answer.text)[0])
     except requests.exceptions.ConnectionError:
-        print(selected_file + " couldn't be uploaded to " + selected_host[0])
+        print(selected_file + ' couldn\'t be uploaded to ' + selected_host[0])
 
 def main():
     """
@@ -41,8 +41,8 @@ def main():
                         help='Files to upload')
     parser.add_argument('-c', metavar='host number', type=int,
                         dest='host', default=random.randrange(0, 4),
-                        help=("Select hosting: 0 - 1339.cf, 1 - bucket.pw,"
-                              " 2 - xpo.pw,3 - pomf.cat."))
+                        help=('Select hosting: 0 - 1339.cf, 1 - bucket.pw,'
+                              ' 2 - xpo.pw,3 - pomf.cat.'))
     parser.add_argument('-l', dest='only_link', action='store_const',
                         const=True, default=False,
                         help='Changes output to just link to the file')
