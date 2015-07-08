@@ -28,7 +28,7 @@ def upload_files(selected_file, selected_host, only_link):
         else:
             return selected_file+" : "+selected_host[1]+(
                 re.findall('"url":"(.+)",', answer.text)[0])
-    except requests.exceptions.ConnectionError:
+    except requests.exceptions.ConnectionError or IndexError:
         print(selected_file + ' couldn\'t be uploaded to ' + selected_host[0])
 
 def main():
@@ -60,7 +60,7 @@ def main():
         for i in args.files:
             print(upload_files(i, clone_list[int(args.host)], args.only_link))
     except IndexError as i:
-        print('Please enter valid server number.')
+        print('Please enter valid server number.'+ str(i) + str(len(clone_list[4])))
 
 if __name__ == '__main__':
     main()
