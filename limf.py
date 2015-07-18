@@ -6,6 +6,8 @@ See http://www.wtfpl.net/txt/copying for the full license text.
 """
 import re
 import random
+import urllib
+import subprocess
 try:
     import requests
     import argparse
@@ -46,6 +48,12 @@ def main():
     parser.add_argument('-l', dest='only_link', action='store_const',
                         const=True, default=False,
                         help='Changes output to just link to the file')
+    parser.add_argument('-e', dest='encrypt', action='store_const',
+                        const=True, default=False,
+                        help='Encrypts uploaded files')
+    parser.add_argument('-d', dest='decrypt', action='store_const',
+                        const=True, default=False,
+                        help='Decrypts uploaded files')
     args = parser.parse_args()
     #fixme check if clone is active or not.
     clone_list = [
