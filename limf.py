@@ -7,7 +7,12 @@ See http://www.wtfpl.net/txt/copying for the full license text.
 import re
 import random
 import urllib
-import subprocess
+try:
+    import gnupg
+    gpg=gnupg.GPG(homedir='/home/lich/.gnupg')
+    encryption_disabled = False
+except ImportError:
+    encryption_disabled = True
 try:
     import requests
     import argparse
@@ -42,9 +47,9 @@ def main():
     parser.add_argument('files', metavar='file', nargs='+', type=str,
                         help='Files to upload')
     parser.add_argument('-c', metavar='host number', type=int,
-                        dest='host', default=random.randrange(0, 4),
+                        dest='host', default=None,
                         help=('Select hosting: 0 - 1339.cf, 1 - bucket.pw,'
-                              ' 2 - xpo.pw,3 - pomf.cat.'))
+                              ' 2 - xpo.pw, 3 - pomf.cat, 4 - pomf.hummingbird.moe.'))
     parser.add_argument('-l', dest='only_link', action='store_const',
                         const=True, default=False,
                         help='Changes output to just link to the file')
@@ -60,14 +65,20 @@ def main():
         ["http://1339.cf/", "http://a.1339.cf/"],
         ["https://bucket.pw/", "https://dl.bucket.pw/"],
         ["http://xpo.pw/", "http://u.xpo.pw/"],
-        ["http://pomf.cat/", "http://a.pomf.cat/"]
+        ["http://pomf.cat/", "http://a.pomf.cat/"],
+        ["http://pomf.hummingbird.moe/","http://a.pomf.hummingbird.moe/"]
     ]
     #upload every file selected to random or chosen host
     try:
         for i in args.files:
-            print(upload_files(i, clone_list[int(args.host)], args.only_link))
+            if args.host:
+                print(upload_files(i, clone_list[args.host],args.only_link))
+            else:
+                print(upload_files(i, clone_list[random.randrange(
+                0,len(clone_list))], args.only_link))
     except IndexError as i:
         print('Please enter valid server number.')
+        exit()
 
 if __name__ == '__main__':
     main()
