@@ -129,7 +129,7 @@ def main():
             if args.host+1:
                 print(upload_files(open(i, 'rb'), \
                       clone_list[args.host], args.only_link, i))
-            elif args.encrypt and args.host:
+            elif args.encrypt and args.host+1:
                 print(encrypt_files(clone_list[args.host], args.only_link, i))
             elif args.encrypt:
                 print(encrypt_files(clone_list[random.randrange( \
@@ -137,7 +137,6 @@ def main():
             else:
                 print(upload_files(open(i, 'rb'), clone_list[random.randrange( \
                         0, len(clone_list))], args.only_link, i))
-        print(args.host)
         exit()
     except IndexError:
         print('Please enter valid server number.')
