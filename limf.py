@@ -106,10 +106,10 @@ def main():
                         help='Changes output to just link to the file')
     parser.add_argument('-e', dest='encrypt', action='store_const',
                         const=True, default=False,
-                        help='Encrypts uploaded files')
+                        help='Encrypts then uploads the files.')
     parser.add_argument('-d', dest='decrypt', action='store_const',
                         const=True, default=False,
-                        help='Decrypts uploaded files')
+                        help='Decrypts files from links with encrypted files')
     args = parser.parse_args()
     #fixme check if clone is active or not.
     clone_list = [
