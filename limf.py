@@ -8,6 +8,7 @@ import re
 import random
 import urllib
 import shlex
+import os
 from subprocess import Popen,PIPE,check_output
 try:
     check_output(["gpg", "-h"])
@@ -38,6 +39,7 @@ def upload_files(selected_file, selected_host, only_link, file_name):
                 re.findall('"url":"(.+)",', answer.text)[0])
     except requests.exceptions.ConnectionError:
         print(file_name + ' couldn\'t be uploaded to ' + selected_host[0])
+
 def encrypt_files(selected_file, selected_host, only_link, file_name):
     """
     Encrypts file with gpg and random generated password
@@ -54,6 +56,34 @@ def encrypt_files(selected_file, selected_host, only_link, file_name):
     encrypted_data = p.communicate(passphrase.encode())[0]
     return upload_files(encrypted_data, selected_host,only_link,file_name)+'!'+passphrase
 
+def decrypt_files(file_link):
+    """
+    Decrypts file from entered links
+    """
+    try:
+        parsed_link = re.findall('(.*\/(.*))!(.{30})', file_link)[0]
+        req = urllib.request.Request(
+            parsed_link[0], 
+            data=None, 
+            headers={
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+                }
+                                    )   
+        file_response = urllib.request.urlopen(req)
+        file_to_decrypt = file_response.read()
+        r, w = os.pipe()
+        cmd = 'gpg --batch --decrypt --passphrase-fd {}'.format(r)
+        p = Popen(shlex.split(cmd), stdout=PIPE, stdin=PIPE, stderr=PIPE, pass_fds=(r,))
+        os.close(r)    # closes fd in parent, child needs it
+        open(w, 'w').write(parsed_link[2])
+        decrypted_data, stderr = p.communicate(file_to_decrypt)
+        with open(parsed_link[1], 'wb') as decrypted_file:
+            decrypted_file.write(decrypted_data)
+        return parsed_link[1] + ' is decrypted and saved.'
+    except IndexError as e:
+        return 'Please enter valid link'
+
+    
 def main():
     """
     Creates arguments, and list of working clones
@@ -85,6 +115,10 @@ def main():
         ["http://pomf.hummingbird.moe/","http://a.pomf.hummingbird.moe/"]
     ]
     #upload every file selected to random or chosen host
+    if args.decrypt:
+        for i in args.files:
+            print(decrypt_files(i))
+            exit()
     try:
         for i in args.files:
             if args.host:
@@ -103,6 +137,8 @@ def main():
     except IndexError as i:
         print('Please enter valid server number.')
         exit()
+    except FileNotFoundError:
+        print('Plese enter valid file.')
 
 if __name__ == '__main__':
     main()
