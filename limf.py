@@ -7,11 +7,12 @@ See http://www.wtfpl.net/txt/copying for the full license text.
 import re
 import random
 import urllib
+import shlex
+from subprocess import Popen,PIPE,check_output
 try:
-    import gnupg
-    gpg=gnupg.GPG(homedir='/home/lich/.gnupg')
+    check_output(["gpg", "-h"])
     encryption_disabled = False
-except ImportError:
+except FileNotFoundError:
     encryption_disabled = True
 try:
     import requests
@@ -20,7 +21,7 @@ except ImportError:
     print('Install argparse and request libraries.')
     exit()
 
-def upload_files(selected_file, selected_host, only_link):
+def upload_files(selected_file, selected_host, only_link, file_name):
     """
     Uploads selected file to the host, thanks to the fact that
     every pomf.se based site has pretty much the same architecture.
@@ -28,15 +29,30 @@ def upload_files(selected_file, selected_host, only_link):
     try:
         answer = requests.post(
             url=selected_host[0]+"upload.php",
-            files={'files[]':open(selected_file, 'rb')})
+            files={'files[]':selected_file})
         if only_link:
             return selected_host[1]+(
                 re.findall('"url":"(.+)",', answer.text)[0])
         else:
-            return selected_file+" : "+selected_host[1]+(
+            return file_name+" : "+selected_host[1]+(
                 re.findall('"url":"(.+)",', answer.text)[0])
     except requests.exceptions.ConnectionError:
-        print(selected_file + ' couldn\'t be uploaded to ' + selected_host[0])
+        print(file_name + ' couldn\'t be uploaded to ' + selected_host[0])
+def encrypt_files(selected_file, selected_host, only_link, file_name):
+    """
+    Encrypts file with gpg and random generated password
+    """
+    if encryption_disabled:
+        print('For encryption please install gpg')
+        exit()
+    passphrase = '%030x' % random.randrange(16**30)
+    source_filename = file_name
+    cmd = 'gpg --batch --symmetric --cipher-algo AES256 --passphrase-fd 0 ' \
+          '--output - {}'.format(source_filename)
+    # error handling omitted
+    p = Popen(shlex.split(cmd), stdout=PIPE, stdin=PIPE, stderr=PIPE)
+    encrypted_data = p.communicate(passphrase.encode())[0]
+    return upload_files(encrypted_data, selected_host,only_link,file_name)+'!'+passphrase
 
 def main():
     """
@@ -72,10 +88,18 @@ def main():
     try:
         for i in args.files:
             if args.host:
-                print(upload_files(i, clone_list[args.host],args.only_link))
+                print(upload_files(open(i,'rb'), 
+                      clone_list[args.host],args.only_link, i))
+            elif args.encrypt and args.host:
+                print(encrypt_files(open(i, 'rb'),
+                      clone_list[args.host],args.only_link, i))
+            elif args.encrypt:
+                print(encrypt_files(open(i,'rb'),clone_list[random.randrange(
+                      0,len(clone_list))], args.only_link, i))
             else:
-                print(upload_files(i, clone_list[random.randrange(
-                0,len(clone_list))], args.only_link))
+                print(upload_files(open(i,'rb'), clone_list[random.randrange(
+                      0,len(clone_list))], args.only_link, i))
+        exit()
     except IndexError as i:
         print('Please enter valid server number.')
         exit()
