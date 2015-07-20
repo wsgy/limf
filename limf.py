@@ -126,7 +126,7 @@ def main():
             exit()
     try:
         for i in args.files:
-            if args.host+1:
+            if args.host+1 and not args.encrypt:
                 print(upload_files(open(i, 'rb'), \
                       clone_list[args.host], args.only_link, i))
             elif args.encrypt and args.host+1:
