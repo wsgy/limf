@@ -98,7 +98,7 @@ def main():
     parser.add_argument('files', metavar='file', nargs='+', type=str,
                         help='Files to upload')
     parser.add_argument('-c', metavar='host number', type=int,
-                        dest='host', default=None,
+                        dest='host', default=-1,
                         help=('Select hosting: 0 - 1339.cf, 1 - bucket.pw,'
                               ' 2 - xpo.pw, 3 - pomf.cat, 4 - pomf.hummingbird.moe.'))
     parser.add_argument('-l', dest='only_link', action='store_const',
@@ -126,7 +126,7 @@ def main():
             exit()
     try:
         for i in args.files:
-            if args.host:
+            if args.host+1:
                 print(upload_files(open(i, 'rb'), \
                       clone_list[args.host], args.only_link, i))
             elif args.encrypt and args.host:
@@ -137,6 +137,7 @@ def main():
             else:
                 print(upload_files(open(i, 'rb'), clone_list[random.randrange( \
                         0, len(clone_list))], args.only_link, i))
+        print(args.host)
         exit()
     except IndexError:
         print('Please enter valid server number.')
