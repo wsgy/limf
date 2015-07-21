@@ -4,7 +4,7 @@ Pomf.se clone uploading tool
 Main executable - uploads the file and can encrypt it if asked.
 Also can decrypt when right links is given.
 ###limfshot.sh
-Tool for making screenshots, uploading them, and putting link in clipboard.  
+Tool for making screenshots, uploading them, and putting link in clipboard.
 Useful when used as bind to key.
 ####Depends
 * Python 3 - required for tool to work
