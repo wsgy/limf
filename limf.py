@@ -53,7 +53,7 @@ def encrypt_files(selected_host, only_link, file_name):
           '--output - {}'.format(source_filename)
     encrypted_output = Popen(shlex.split(cmd), stdout=PIPE, stdin=PIPE, stderr=PIPE)
     encrypted_data = encrypted_output.communicate(passphrase.encode())[0]
-    return upload_files(encrypted_data, selected_host, only_link, file_name)+'!'+passphrase
+    return upload_files(encrypted_data, selected_host, only_link, file_name)+'#'+passphrase
 
 def decrypt_files(file_link):
     """
