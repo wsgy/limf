@@ -52,7 +52,6 @@ def encrypt_files(selected_host, only_link, file_name):
     cmd = 'gpg --batch --symmetric --cipher-algo AES256 --passphrase-fd 0 ' \
           '--output - {}'.format(source_filename)
     encrypted_output = Popen(shlex.split(cmd), stdout=PIPE, stdin=PIPE, stderr=PIPE)
-    encrypted_data = encrypted_output.communicate(passphrase.encode())[0]
     return upload_files(encrypted_data, selected_host, only_link, file_name)+'!'+passphrase
 
 def decrypt_files(file_link):
@@ -82,9 +81,10 @@ def decrypt_files(file_link):
                          pass_fds=(decrypt_r,))
         os.close(decrypt_r)
         open(decrypt_w, 'w').write(parsed_link[2])
-        decrypted_data = decrypt_output.communicate(file_to_decrypt)
+        decrypted_data, stderr = decrypt_output.communicate(file_to_decrypt)
         with open(parsed_link[1], 'wb') as decrypted_file:
             decrypted_file.write(decrypted_data)
+        assert open(parsed_link[1]).read() == decrypted_data.decode()
         return parsed_link[1] + ' is decrypted and saved.'
     except IndexError:
         return 'Please enter valid link'
