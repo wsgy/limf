@@ -63,7 +63,7 @@ def decrypt_files(file_link):
         print('For decryption please install gpg')
         exit()
     try:
-        parsed_link = re.findall(r'(.*/(.*))!(.{30})', file_link)[0]
+        parsed_link = re.findall(r'(.*/(.*))#(.{30})', file_link)[0]
         req = urllib.request.Request(
             parsed_link[0],
             data=None,
