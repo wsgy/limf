@@ -1,7 +1,7 @@
 # limf #
 Pomf.se clone uploading tool
 ###limf.py
-Main executable - uploads the file and encrypts it.
+Main executable - uploads the file and can encrypt it if asked.
 Also can decrypt when right links is given.
 ###limfshot.sh
 Tool for making screenshots, uploading them, and putting link in clipboard.  
