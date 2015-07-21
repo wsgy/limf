@@ -85,7 +85,6 @@ def decrypt_files(file_link):
         decrypted_data, stderr = decrypt_output.communicate(file_to_decrypt)
         with open(parsed_link[1], 'wb') as decrypted_file:
             decrypted_file.write(decrypted_data)
-        assert open(parsed_link[1]).read() == decrypted_data.decode()
         return parsed_link[1] + ' is decrypted and saved.'
     except IndexError:
         return 'Please enter valid link'
