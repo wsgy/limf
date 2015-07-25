@@ -87,7 +87,7 @@ def decrypt_files(file_link):
             decrypted_file.write(decrypted_data)
         return parsed_link[1] + ' is decrypted and saved.'
     except IndexError:
-        return 'Please enter valid link'
+        return 'Please enter valid link.'
 
 def main():
     """
@@ -139,7 +139,10 @@ def main():
                         0, len(clone_list))], args.only_link, i))
         exit()
     except IndexError:
-        print('Please enter valid server number.')
+        try:
+            print('Selected server (' + clone_list[args.host][0] + ') is offline.')
+        except IndexError:
+            print('Please enter valid server number')
         exit()
     except FileNotFoundError:
         print('Plese enter valid file.')
