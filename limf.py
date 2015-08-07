@@ -100,7 +100,8 @@ def main():
     parser.add_argument('-c', metavar='host number', type=int,
                         dest='host', default=-1,
                         help=('Select hosting: 0 - 1339.cf, 1 - bucket.pw,'
-                              ' 2 - xpo.pw, 3 - pomf.cat, 4 - pomf.hummingbird.moe.'))
+                              ' 2 - xpo.pw, 3 - pomf.cat, 4 - pomf.hummingbird.moe,'
+                              ' 5 - mixtape moe'))
     parser.add_argument('-l', dest='only_link', action='store_const',
                         const=True, default=False,
                         help='Changes output to just link to the file')
@@ -114,10 +115,11 @@ def main():
     #fixme check if clone is active or not.
     clone_list = [
         ["http://1339.cf/", "http://a.1339.cf/"],
-        ["https://bucket.pw/", "https://dl.bucket.pw/"],
+        ["http://bucket.pw/", "http://dl.bucket.pw/"],
         ["http://xpo.pw/", "http://u.xpo.pw/"],
         ["http://pomf.cat/", "http://a.pomf.cat/"],
-        ["http://pomf.hummingbird.moe/", "http://a.pomf.hummingbird.moe/"]
+        ["http://pomf.hummingbird.moe/", "http://a.pomf.hummingbird.moe/"],
+        ["https://mixtape.moe/", "https://dl.mixtape.moe/"]
     ]
     #upload every file selected to random or chosen host
     if args.decrypt:
