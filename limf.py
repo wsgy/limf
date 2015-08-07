@@ -101,7 +101,7 @@ def main():
                         dest='host', default=-1,
                         help=('Select hosting: 0 - 1339.cf, 1 - bucket.pw,'
                               ' 2 - xpo.pw, 3 - pomf.cat, 4 - pomf.hummingbird.moe,'
-                              ' 5 - mixtape moe'))
+                              ' 5 - mixtape moe, 6 - maxfile.ro'))
     parser.add_argument('-l', dest='only_link', action='store_const',
                         const=True, default=False,
                         help='Changes output to just link to the file')
@@ -116,10 +116,10 @@ def main():
     clone_list = [
         ["http://1339.cf/", "http://a.1339.cf/"],
         ["http://bucket.pw/", "http://dl.bucket.pw/"],
-        ["http://xpo.pw/", "http://u.xpo.pw/"],
         ["http://pomf.cat/", "http://a.pomf.cat/"],
         ["http://pomf.hummingbird.moe/", "http://a.pomf.hummingbird.moe/"],
-        ["https://mixtape.moe/", "https://dl.mixtape.moe/"]
+        ["http://xpo.pw/", "http://u.xpo.pw/"],
+        ["https://maxfile.ro/static/", "https://d.maxfile.ro/"]
     ]
     #upload every file selected to random or chosen host
     if args.decrypt:
