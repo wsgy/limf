@@ -31,12 +31,11 @@ def upload_files(selected_file, selected_host, only_link, file_name):
         answer = requests.post(
             url=selected_host[0]+"upload.php",
             files={'files[]':selected_file})
+        file_name_1 = re.findall('"url":"((h.+\/){0,1}(.+))",', answer.text)[0][2] 
         if only_link:
-            return selected_host[1]+(
-                re.findall('"url":"(.+)",', answer.text)[0])
+            return selected_host[1]+file_name_1
         else:
-            return file_name+" : "+selected_host[1]+(
-                re.findall('"url":"(.+)",', answer.text)[0])
+            return "{}: {}{}".format(file_name, selected_host[1], file_name_1)
     except requests.exceptions.ConnectionError:
         print(file_name + ' couldn\'t be uploaded to ' + selected_host[0])
 
@@ -100,7 +99,7 @@ def main():
     parser.add_argument('-c', metavar='host number', type=int,
                         dest='host', default=-1,
                         help=('Select hosting: 0 - 1339.cf, 1 - bucket.pw,'
-                              ' 2 - xpo.pw, 3 - pomf.cat, 4 - pomf.hummingbird.moe,'
+                              ' 2 - pomf.cat, 3 - pomf.hummingbird.moe, 4 - xpo.pw,'
                               ' 5 - mixtape moe, 6 - maxfile.ro'))
     parser.add_argument('-l', dest='only_link', action='store_const',
                         const=True, default=False,
@@ -119,6 +118,7 @@ def main():
         ["http://pomf.cat/", "http://a.pomf.cat/"],
         ["http://pomf.hummingbird.moe/", "http://a.pomf.hummingbird.moe/"],
         ["http://xpo.pw/", "http://u.xpo.pw/"],
+        ["https://mixtape.moe/", "https://my.mixtape.moe/"],
         ["https://maxfile.ro/static/", "https://d.maxfile.ro/"]
     ]
     #upload every file selected to random or chosen host
