@@ -100,7 +100,7 @@ def main():
                         dest='host', default=-1,
                         help=('Select hosting: 0 - 1339.cf, 1 - bucket.pw,'
                               ' 2 - pomf.cat, 3 - pomf.hummingbird.moe, 4 - xpo.pw,'
-                              ' 5 - mixtape moe, 6 - maxfile.ro'))
+                              ' 5 - mixtape.moe, 6 - maxfile.ro'))
     parser.add_argument('-l', dest='only_link', action='store_const',
                         const=True, default=False,
                         help='Changes output to just link to the file')
