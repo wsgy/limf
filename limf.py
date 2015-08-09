@@ -4,11 +4,12 @@ Copyright 2015 Mikołaj 'lich' Halber <lich@cock.li>
 Distributed under the terms of MIT License.
 See License.md for the full license text.
 """
-import re
-import random
-import urllib
-import shlex
+import argparse
 import os
+import random
+import re
+import shlex
+import urllib
 from subprocess import Popen, PIPE, check_output
 try:
     check_output(["gpg", "-h"])
@@ -17,9 +18,8 @@ except FileNotFoundError:
     ENCRYPTION_DISABLED = True
 try:
     import requests
-    import argparse
 except ImportError:
-    print('Install argparse and request libraries.')
+    print('Install request libraries.')
     exit()
 
 def upload_files(selected_file, selected_host, only_link, file_name):
@@ -88,6 +88,32 @@ def decrypt_files(file_link):
     except IndexError:
         return 'Please enter valid link.'
 
+def parse_arguments(args, clone_list):
+    """
+    Makes parsing arguments a function.
+    """
+    host_number = args.host
+    if args.decrypt:
+        for i in args.files:
+            print(decrypt_files(i))
+            exit()
+    for i in args.files:
+        if host_number == None or args.host != host_number:
+            host_number = random.randrange(0, len(clone_list))
+        while True:
+            try:
+                if args.encrypt:
+                    print(encrypt_files(clone_list[host_number], args.only_link, i))
+                else:
+                    print(upload_files(open(i, 'rb'), \
+                          clone_list[host_number], args.only_link, i))
+            except IndexError:
+                #print('Selected server (' + clone_list[host_number][0] + ') is offline.')
+                #print('Trying other host.')
+                host_number = random.randrange(0, len(clone_list))
+                continue
+            break
+
 def main():
     """
     Creates arguments, and list of working clones
@@ -97,7 +123,7 @@ def main():
     parser.add_argument('files', metavar='file', nargs='+', type=str,
                         help='Files to upload')
     parser.add_argument('-c', metavar='host number', type=int,
-                        dest='host', default=-1,
+                        dest='host', default=None,
                         help=('Select hosting: 0 - 1339.cf, 1 - bucket.pw,'
                               ' 2 - pomf.cat, 3 - pomf.hummingbird.moe, 4 - xpo.pw,'
                               ' 5 - mixtape.moe, 6 - maxfile.ro'))
@@ -121,31 +147,12 @@ def main():
         ["https://mixtape.moe/", "https://my.mixtape.moe/"],
         ["https://maxfile.ro/static/", "https://d.maxfile.ro/"]
     ]
+    if args.host and args.host not in range(0, len(clone_list)):
+        print('Please input valid host number')
+        exit()
     #upload every file selected to random or chosen host
-    if args.decrypt:
-        for i in args.files:
-            print(decrypt_files(i))
-            exit()
     try:
-        for i in args.files:
-            if args.host+1 and not args.encrypt:
-                print(upload_files(open(i, 'rb'), \
-                      clone_list[args.host], args.only_link, i))
-            elif args.encrypt and args.host+1:
-                print(encrypt_files(clone_list[args.host], args.only_link, i))
-            elif args.encrypt:
-                print(encrypt_files(clone_list[random.randrange( \
-                        0, len(clone_list))], args.only_link, i))
-            else:
-                print(upload_files(open(i, 'rb'), clone_list[random.randrange( \
-                        0, len(clone_list))], args.only_link, i))
-        exit()
-    except IndexError:
-        try:
-            print('Selected server (' + clone_list[args.host][0] + ') is offline.')
-        except IndexError:
-            print('Please enter valid server number')
-        exit()
+        parse_arguments(args, clone_list)
     except FileNotFoundError:
         print('Plese enter valid file.')
 
