@@ -18,7 +18,7 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        flask=limf.cli:main
+        limf=limf.cli:main
     '''
 )
 
