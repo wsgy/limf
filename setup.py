@@ -7,7 +7,7 @@ def read(fname):
 
 setup(
     name='limf',
-    version='0.3.0',
+    version='0.3.1',
     url='http://github.com/lich/limf',
     license='MIT',
     author='Mikołaj Halber',
