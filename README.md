@@ -1,6 +1,9 @@
 # limf #
 Pomf.se clone uploading tool
-###limf.py #
+## Installation #
+`pip install limf`  
+Yep, that's all
+###limf#
 Main executable - uploads the file and can encrypt it if asked.  
 Also can decrypt when right links is given.  
 If file is uploaded to different host than chosen, it

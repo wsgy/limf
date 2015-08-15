@@ -3,6 +3,7 @@ from setuptools import setup
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
+
 setup(
     name='limf',
     version='0.3.0',
@@ -11,6 +12,7 @@ setup(
     author='Mikołaj Halber',
     author_email='lich@openmailbox.com',
     description='A tool for uploading files to pomf.se clones',
+    long_description=read('README.md'),
     packages=['limf'],
     install_requires=[
         'Requests>=2.6.0',
