@@ -2,7 +2,7 @@
 import random
 import shlex
 from subprocess import Popen, PIPE, check_output
-from uploader import upload_files
+from .uploader import upload_files
 try:
     check_output(["gpg", "-h"])
     ENCRYPTION_DISABLED = False

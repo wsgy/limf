@@ -1,6 +1,6 @@
 #!/bin/env python
 import argparse
-from parse_arguments import parse_arguments
+from .parse_arguments import parse_arguments
 def main():
     """
     Creates arguments, and list of working clones

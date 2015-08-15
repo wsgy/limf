@@ -1,9 +1,9 @@
 #!/bin/env python
 import argparse
 import random
-from decrypter import decrypt_files
-from encrypter import encrypt_files
-from uploader import upload_files
+from .decrypter import decrypt_files
+from .encrypter import encrypt_files
+from .uploader import upload_files
 def parse_arguments(args, clone_list):
     """
     Makes parsing arguments a function.
