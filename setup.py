@@ -19,10 +19,9 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
     ],
-    entry_points='''
-        [console_scripts]
-        limf=limf.cli:main
-    '''
+    
+    entry_points = {
+        'console_scripts': ['limf=limf.cli:main']}
 )
 
 
