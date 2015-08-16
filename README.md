@@ -1,7 +1,7 @@
 # limf 
 Pomf.se clone uploading tool
 ## Installation 
-`pip install limf`  
+`sudo pip install limf`  
 Yep, that's all
 ###limf
 Main executable - uploads the file and can encrypt it if asked.  
