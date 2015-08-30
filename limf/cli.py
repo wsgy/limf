@@ -25,7 +25,7 @@ def main():
                         help='Decrypts files from links with encrypted files')
     args = parser.parse_args()
     clone_list = [
-        ["http://1339.cf/", "http://a.1339.cf/"],
+        ["http://1339.cf/", "http://b.1339.cf/"],
         ["http://bucket.pw/", "http://dl.bucket.pw/"],
         ["http://pomf.cat/", "http://a.pomf.cat/"],
         ["http://pomf.hummingbird.moe/", "http://a.pomf.hummingbird.moe/"],
