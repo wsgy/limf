@@ -13,7 +13,8 @@ def main():
                         dest='host', default=None,
                         help=('Select hosting: 0 - 1339.cf, 1 - bucket.pw,'
                               ' 2 - pomf.cat, 3 - pomf.hummingbird.moe, 4 - xpo.pw,'
-                              ' 5 - mixtape.moe, 6 - maxfile.ro'))
+                              ' 5 - mixtape.moe, 6 - maxfile.ro,'
+                              ' 7 - pantsu.cat'))
     parser.add_argument('-l', dest='only_link', action='store_const',
                         const=True, default=False,
                         help='Changes output to just link to the file')
@@ -31,7 +32,8 @@ def main():
         ["http://pomf.hummingbird.moe/", "http://a.pomf.hummingbird.moe/"],
         ["http://xpo.pw/", "http://u.xpo.pw/"],
         ["https://mixtape.moe/", "https://my.mixtape.moe/"],
-        ["https://maxfile.ro/static/", "https://d.maxfile.ro/"]
+        ["https://maxfile.ro/static/", "https://d.maxfile.ro/"],
+        ["https://pantsu.cat/", "https://i.pantsu.cat/"]
     ]
     if args.host and args.host not in range(0, len(clone_list)):
         print('Please input valid host number')
