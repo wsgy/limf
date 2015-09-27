@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='limf',
-    version='0.3.5',
+    version='0.3.6',
     url='http://github.com/lich/limf',
     license='MIT',
     author='Mikołaj Halber',
