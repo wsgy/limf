@@ -5,8 +5,8 @@
         ["http://pomf.hummingbird.moe/", "http://a.pomf.hummingbird.moe/", "pomf.hummingbird.moe"],
         ["https://mixtape.moe/", "https://my.mixtape.moe/", "mixtape.moe"],
         ["https://maxfile.ro/static/", "https://d.maxfile.ro/", "maxfile.ro"],
-        ["https://pantsu.cat/", "https://i.pantsu.cat/", "pantsu.cat"]
-        ["http://pomf.pl/", "http://i.pomf.pl/", "pomf.pl"]
+        ["https://pantsu.cat/", "https://i.pantsu.cat/", "pantsu.cat"],
+        ["http://pomf.pl/", "http://i.pomf.pl/", "pomf.pl"],
         ["http://pomf.io/", "http://u.pomf.io/", "pomf.io"]
 ]
 
