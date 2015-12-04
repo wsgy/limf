@@ -1,10 +1,15 @@
 #!/bin/env python
+"""
+Limf
+----
+Limf is a tool for uploading files to pomf.se clones.
+"""
 from setuptools import setup
 
 
 setup(
     name='limf',
-    version='0.4.0',
+    version='0.4.1',
     url='http://github.com/lich/limf',
     license='MIT',
     author='Mikołaj Halber',
@@ -19,8 +24,7 @@ setup(
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
     ],
-    
-    entry_points = {
+    entry_points={
         'console_scripts': ['limf=limf.cli:main']}
 )
 

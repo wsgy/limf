@@ -1,4 +1,5 @@
 #!/bin/env python
+"""Encrypts file"""
 import random
 import shlex
 from subprocess import Popen, PIPE, check_output

@@ -1,4 +1,5 @@
 #!/bin/env python
+"""Decrypts file if it matches syntax"""
 import os
 import re
 import shlex

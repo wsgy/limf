@@ -1,5 +1,5 @@
 #!/bin/env python
-import argparse
+"""Parses given arguments"""
 import random
 from .decrypter import decrypt_files
 from .encrypter import encrypt_files
@@ -14,7 +14,7 @@ def parse_arguments(args, clone_list):
             print(decrypt_files(i))
             exit()
     for i in args.files:
-        if host_number == None or args.host != host_number:
+        if host_number is None or args.host != host_number:
             host_number = random.randrange(0, len(clone_list))
         while True:
             try:

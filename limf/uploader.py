@@ -1,4 +1,5 @@
 #!/bin/env python
+"""Simply uploads the files"""
 import re
 try:
     import requests
@@ -15,7 +16,7 @@ def upload_files(selected_file, selected_host, only_link, file_name):
         answer = requests.post(
             url=selected_host[0]+"upload.php",
             files={'files[]':selected_file})
-        file_name_1 = re.findall('"url":"((h.+\/){0,1}(.+))",', answer.text)[0][2] 
+        file_name_1 = re.findall(r'"url":"((h.+\/){0,1}(.+))",', answer.text)[0][2]
         if only_link:
             return selected_host[1]+file_name_1
         else:

@@ -1,23 +1,24 @@
 #!/bin/env python
+"""A command line tool for uploding stuff to pomf.se clones"""
 import argparse
 import urllib
 import json
 from .parse_arguments import parse_arguments
 def main():
-    """
-    Creates arguments, and list of working clones
-    """
+    """Creates arguments and parses user input"""
     try:
-        clone_list=json.loads(urllib.request.urlopen("https://raw.githubusercontent.com/lich/limf/master/host_list.json").read().decode('utf-8'))
+        url = "https://raw.githubusercontent.com/lich/limf/master/host_list.json"
+        clone_list = json.loads(urllib.request.urlopen(url).read().decode('utf-8'))
     except urllib.error.URLError:
         print("Check your internet connection.")
         exit()
+    #Dynamically generate host list from json hosted on github
     host_string = 'Select hosting: '
     for i in range(0, len(clone_list)):
         if i == len(clone_list)-1:
-            host_string+=str(i) + ' - ' + clone_list[i][2]
+            host_string += '{} - {}'.format(str(i), clone_list[i][2])
         else:
-            host_string+=str(i) + ' - ' + clone_list[i][2] + ', '
+            host_string += '{} - {}, '.format(str(i), clone_list[i][2])
     parser = argparse.ArgumentParser(
         description='Uploads selected file to working pomf.se clone')
     parser.add_argument('files', metavar='file', nargs='+', type=str,
