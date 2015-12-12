@@ -12,7 +12,7 @@ setup(
     version='0.4.1',
     url='http://github.com/lich/limf',
     license='MIT',
-    author='Mikołaj Halber',
+    author='Mikolaj Halber',
     author_email='lich@openmailbox.com',
     description='A tool for uploading files to pomf.se clones',
     long_description='Just read README.md. I will create .rst file when I want to do it.',
